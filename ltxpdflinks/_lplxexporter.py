@@ -14,6 +14,7 @@ class LplxPictureEnvExporter:
     def export(self, extractedgraphiclinks):
         e = extractedgraphiclinks # shorthand
         graphic_basefname, graphic_ext = os.path.splitext(e.graphic_fname)
+
         s = \
 r"""% LPLX file for """ + _makeltxsafe(e.graphic_fname) + r"""
 %
@@ -22,9 +23,9 @@ r"""% LPLX file for """ + _makeltxsafe(e.graphic_fname) + r"""
 \def\lplxiGraphicBaseFname{""" + _makeltxsafe(graphic_basefname) + r"""}%
 \def\lplxiGraphicExt{""" + _makeltxsafe(graphic_ext) + r"""}%
 \lplxIncludeGraphics
-\lplxSetBbox{0}{0}""" + "{{{:d}}}{{{:d}}}".format(e.size[0], e.size[1]) + r"""%
-%%BoundingBox: 0 0 """ + "{:d} {:d}".format(e.size[0], e.size[1]) + r"""
-%%HiResBoundingBox: 0 0 """ + "{:d} {:d}".format(e.size[0], e.size[1]) + r"""
+\lplxSetBbox{0}{0}""" + "{{{:.6g}}}{{{:.6g}}}".format(e.size[0], e.size[1]) + r"""%
+%%BoundingBox: 0 0 """ + "{:d} {:d}".format(int(e.size[0]), int(e.size[1])) + r"""
+%%HiResBoundingBox: 0 0 """ + "{:.6g} {:.6g}".format(e.size[0], e.size[1]) + r"""
 \unitlength=""" + e.unitlength + r"""\relax
 \lplxSetupScaleAndBbox
 \lplxaDoScale{%

@@ -18,20 +18,39 @@ class ExtractedLink:
     """
     def __init__(self, link_bbox, link_type, link_target, **kwargs):
         super().__init__()
-        self.link_bbox = link_bbox
+        x, y, w, h = link_bbox
+        self.link_bbox = (float(x), float(y), float(w), float(h))
         self.link_type = link_type
         self.link_target = link_target
         self.dic = dict(kwargs)
+
+    def __repr__(self):
+        return self.__class__.__name__ + '({!r}, {!r}, {!r}, **{!r})'.format(
+            self.link_bbox,
+            self.link_type,
+            self.link_target,
+            self.dic
+            )
 
 
 class ExtractedGraphicLinks:
     def __init__(self, graphic_fname, size, links, *, unitlength='1bp', **kwargs):
         self.graphic_fname = graphic_fname
         self.unitlength = unitlength # LaTeX length
-        self.size = size # (width, height)
+        (w,h) = size
+        self.size = (float(w),float(h)) # (width, height)
         self.links = links
         self.dic = dict(kwargs)
 
+    def __repr__(self):
+        return self.__class__.__name__ + \
+            '({!r}, {!r}, {!r}, unitlength={!r}, **{!r})'.format(
+                self.graphic_fname,
+                self.size,
+                self.links,
+                self.unitlength,
+                self.dic
+            )
 
 class PdfGraphicLinksExtractor:
     def __init__(self, fname):
