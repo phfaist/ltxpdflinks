@@ -1,0 +1,20 @@
+% LPLX file for testgraphics2.pdf
+%
+\begingroup
+\def\lplxiGraphicFname{testgraphics2.pdf}%
+\def\lplxiGraphicBaseFname{testgraphics2}%
+\def\lplxiGraphicExt{.pdf}%
+\lplxIncludeGraphics
+\lplxSetBbox{0}{0}{400}{300}%
+%%BoundingBox: 0 0 400 300
+%%HiResBoundingBox: 0 0 400 300
+\unitlength=1bp\relax
+\lplxSetupScaleAndBbox
+\lplxaDoScale{%
+\begin{picture}(\lplxvCropW,\lplxvCropH)(\lplxvCropX,\lplxvCropY)%
+\lplxPutLink{120}{185}{120}{15}{\href{https://github.com/}}{}%
+\lplxPutLink{120}{165}{120}{15}{\hyperref[sec:testref]}{}%
+\lplxPutLink{120}{104.98}{120}{15.00}{\hyperref[sec:testref]}{}%
+\lplxPutLink{278.745}{150}{31.983}{31.983}{\hyperlink{cite.Ligo2016}}{}%
+\end{picture}%
+}\endgroup

@@ -1,0 +1,68 @@
+% LPLX file for testgraphics.pdf
+%
+\begingroup
+\makeatletter
+\def\lplxiGraphicFname{testgrahpics.pdf}%
+\def\lplxiGraphicExt{.pdf}%
+\begingroup
+  \catcode`\%=0%
+  \def\%BoundingBox: #1 #2 #3 #4\@nil{\endgroup\lplxSetBbox{#1}{#2}{#3}{#4}}\relax
+%%BoundingBox: 0 0 400 300
+\@nil
+%%HiResBoundingBox: 0 0 400 300
+%
+\hbox to 0pt{%
+  \Ginclude@graphics{testgraphics.pdf}%
+}%
+% ratio of two dimensions: 1pt/1bp = \strip@pt \dimexpr 1bp*65536/\number\dimexpr 1pt\relax
+% so (requested-width / actual-width) = \strip@pt \dimexpr (req-width)*65536/\number\dimexpr (true-width)\relax
+\unitlength=1bp\relax
+\message{***Gin@... = |\Gin@urx| |\Gin@llx| |\Gin@ury| |\Gin@lly|***}%
+\message{*** |\Gin@scalex| |\Gin@scaley|***}%
+\newdimen\lplxiBboxWcrdim
+\newdimen\lplxiBboxHcrdim
+\lplxiBboxWcrdim=\dimexpr \Gin@urx bp - \Gin@llx bp\relax
+\lplxiBboxHcrdim=\dimexpr \Gin@ury bp - \Gin@lly bp\relax
+\edef\lplxiBboxWcrbp{\strip@pt\dimexpr \lplxiBboxWcrdim*65536/\number\dimexpr1bp\relax}%
+\edef\lplxiBboxHcrbp{\strip@pt\dimexpr \lplxiBboxHcrdim*65536/\number\dimexpr1bp\relax}%
+\edef\lplxiBboxXcrbp{\Gin@llx}%
+\edef\lplxiBboxYcrbp{\Gin@lly}%
+\edef\tmpdoscale{%
+  \noexpand\scalebox{%
+    \strip@pt \dimexpr\Gin@req@width*65536/\number\lplxiBboxWcrdim\relax}[%
+    \strip@pt \dimexpr\Gin@req@height*65536/\number\lplxiBboxHcrdim\relax]%
+    % \strip@pt \dimexpr\Gin@req@width*65536/\number\dimexpr\lplxiBboxW bp\relax}[%
+    % \strip@pt \dimexpr\Gin@req@height*65536/\number\dimexpr\lplxiBboxH bp\relax]%
+}%
+%
+%
+\def\lplx@putlink{%
+  \ifGin@clip
+    \expandafter\lplx@clipputlink
+  \else
+    \expandafter\lplx@doputlink
+  \fi
+}%
+\def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+  \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
+}%
+\def\lplx@clipputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+  \PackageWarning{phflplx}{Clipping of links is not supported yet.}%
+  \lplx@doputlink{#1}{#2}{#3}{#4}{#5}{#6}%
+}%
+%
+%
+\message{***\detokenize\expandafter{\tmpdoscale}*** }%
+\tmpdoscale{%
+%
+\begin{picture}(\lplxiBboxWcrbp,\lplxiBboxHcrbp)(\lplxiBboxXcrbp,\lplxiBboxYcrbp)%
+%\put(0,0){\lplxdoinnerincludegraphics}%
+\put(0,0){\makebox{x Hi!}}%
+\lplx@putlink{120}{\numexpr \lplxiBboxH-100-15\relax}{120}{15}{\href{https://github.com/}}{}%
+%\put(120,\numexpr \lplxiBboxH-120-15\relax){\href{https://github.com/}{\phantom{\rule{120bp}{15bp}}}}%
+\lplx@putlink{120}{\numexpr \lplxiBboxH-120-15\relax}{120}{15}{\hyperref[sec:testref]}{}%
+\put(120,\numexpr \lplxiBboxH-180-15\relax){\hyperref[sec:testref]{{\rule{120bp}{15bp}}}}%
+\put(\lplxiBboxW,\lplxiBboxH){x T-R}%
+\end{picture}%
+}%
+\endgroup

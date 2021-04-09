@@ -1,0 +1,305 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2021 by Philippe Faist, philippe.faist@bluewin.ch
+% -------------------------------------------------------
+% 
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of LaTeX 
+% version 2005/12/01 or later.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{phflplx.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{phflplx}
+%<*package>
+    [2021/04/09 v0.1 phflplx package]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage[preset=xpkgdoc]{phfnote}
+\usepackage{phflplx}
+
+\usepackage{needspace}
+
+\def\eqsign@{=}
+\def\eqsign{\protect\eqsign@}
+\robustify\eqsign
+\makeatother
+
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+
+\begin{document}
+  \DocInput{phflplx.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v0.1}{2021/04/09}{Initial version}
+%
+% \GetFileInfo{phflplx.dtx}
+%
+% \iffalse Bypass indexing for following commands: \fi
+% \DoNotIndex{\newcommand,\newenvironment,\renewcommand,\long,\def,\edef,\gdef,\xdef,\if,\else,\fi,\par,\relax,\vspace,\vskip,\hspace,\hskip,\vbox,\hbox}
+% 
+% \title{The \pkgname{phflplx} package --- include PDF graphics with hyperlinks}
+% \author{Philippe Faist\quad\email{philippe.faist@bluewin.ch}}
+% \date{\pkgfmtdate\filedate}
+% \maketitle
+%
+% \begin{abstract}
+%   \pkgname{phflplx}---A handy \LaTeX{} package for including graphics defined
+%   via \LaTeX\ source code files.  Designed for use with the |ltxpdflinks| tool
+%   in order to include PDF graphics in documents with external or internal
+%   hyperlinks.
+% \end{abstract}
+%
+% \phantomsection\label{sec:toc}
+% \inlinetoc
+%
+% \section{Introduction}
+%
+% Usage:
+%
+% \begin{verbatim}
+% \usepackage{phflplx}
+% \DeclareGraphicsExtensions{.lplx,.pdf}
+% \end{verbatim}
+%
+% This package is designed to be used in conjunction with the |ltxpdflinks|
+% command-line utility to extract PDF links into |.lplx| files.
+%
+% Make sure to process your PDF files before you compile your document:
+% \begin{verbatim}
+% > ltxpdflinks myfigure.pdf
+% \end{verbatim}
+% 
+% In fact, LPLX files are simple LaTeX sources that are included directly by the
+% graphics driver.  The LPLX file typically includes the PDF itself using a
+% lower-level graphics command and draws invisible hyperlinks on top of the
+% graphics.  (The LPLX file also takes care of resizing and cropping the
+% graphics if necessary.)
+%
+%
+% \StopEventually{\PrintChangesAndIndex}
+%
+% \section{Implementation}
+%
+% Load some useful packages.
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+%    \end{macrocode}
+%
+% Check that the user is loading the \pkgname{hyperref} package! (We don't load
+% it automatically to avoid issues of package loading order, link appearance,
+% etc.)
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{}{%
+    \PackageWarning{phflplx}{The package `hyperref' was not loaded. You
+      probably forgot to load it.}%
+  }%
+}
+%    \end{macrocode}
+%
+%
+% Declaring the graphics rule for the LPLX extension.  Note that the LPLX file
+% has the line |%%BoundingBox 0 0 <W> <H>| so that the size of the graphics can
+% be parsed by the default \pkgname{graphics} graphic size inspector, which is
+% designed to parse |%%BoundingBox| commands in EPS files.
+%    \begin{macrocode}
+\DeclareGraphicsRule{.lplx}{lplx}{*}{}
+%    \end{macrocode}
+% 
+% Declare the driver functions for the \pkgname{graphics} package internals.
+%    \begin{macrocode}
+\def\Ginclude@lplx#1{%
+  \message{<#1>}%
+  \input{#1}%
+}
+%    \end{macrocode}
+%
+% This command gets called from within the LPLX files to actually include the
+% underlying graphics.
+%    \begin{macrocode}
+\def\lplxIncludeGraphics{%
+  \edef\x{\noexpand\hbox to 0pt{%
+      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
+  \x
+}
+%    \end{macrocode}
+% 
+% Declare some simple helpers that are used in our automatically generated LPLX
+% files.
+%    \begin{macrocode}
+\newdimen\lplxiBboxWcrdim
+\newdimen\lplxiBboxHcrdim
+\def\lplxSetBbox#1#2#3#4{%
+  \def\lplxiBboxX{#1}%
+  \def\lplxiBboxY{#2}%
+  \def\lplxiBboxW{#3}%
+  \def\lplxiBboxH{#4}%
+  \ifnum\lplxiBboxX>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxX<0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxY>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxY<0\relax\lplx@bboxzerowarn\fi
+}
+\def\lplx@bboxzerowarn{%
+  \PackageWarning{phflplx}{LPLX bounding box is not pinned at (0,0), not supported}%
+}
+%    \end{macrocode}
+% 
+% Utility to set up the appropriate command arguments to use for |\scalebox|,
+% etc.
+%    \begin{macrocode}
+\def\lplx@noscale{1,!}
+\def\lplx@exclam{!}
+\def\lplxSetupScaleAndBbox{%
+%    \end{macrocode}
+% 
+% First, we locally define a macro |\lplxaDoScale{...}| that will generate the
+% correct |\scalebox| call with the given contents, according to the requested
+% size.
+%    \begin{macrocode}
+  \def\lplx@tmp{\Gin@scalex,\Gin@scaley}%
+  \ifx\lplx@tmp\lplx@noscale%
+    \def\lplxaDoScale{}%
+  \else
+    \ifx\Gin@scaley\lplx@exclam
+      \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}}%
+    \else
+      \ifx\Gin@scalex\lplx@exclam
+        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scaley}}%
+      \else
+        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
+      \fi
+    \fi
+  \fi
+%    \end{macrocode}
+% Second, we need to take care of setting the bounding box correctly.  Define
+% |\lplxvCropX| and |\lplxvCropY| which are the $(X,Y)$ position of the lower
+% left corner the part of the image we want to pick out, in user space units.
+% Define |\lplxvCropW| and |\lplxvCropH| as the requested width \& height of the
+% subimage we want to use.
+%    \begin{macrocode}
+  \edef\lplxvCropX{\Gin@llx}%
+  \edef\lplxvCropY{\Gin@lly}%
+  \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
+  \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
+}
+%    \end{macrocode}
+%
+% Finally, a utility that will help us place links in the picture environment.
+% Usage is
+% |\lplxPutLink|\marg{x}\marg{y}\marg{w}\marg{h}\marg{hyperstartcmd}\marg{hyperendtokens}.
+% Here \marg{hyperstartcmd} and \marg{hyperendtokens} are any tokens that will
+% be inserted immediately before and immediately after an invisible rule of the
+% given width and height.  The rule will be in curly braces, so it can be
+% considered as a mandatory argument to the last macro token in
+% \marg{hyperstartcmd}.
+%    \begin{macrocode}
+\def\lplxPutLink{%
+  \ifGin@clip
+    \expandafter\lplx@clipputlink
+  \else
+    \expandafter\lplx@doputlink
+  \fi
+}%
+\def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+  \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
+}%
+\newdimen\lplx@tmpx
+\newdimen\lplx@tmpy
+\newdimen\lplx@tmpw
+\newdimen\lplx@tmph
+\def\lplx@clipputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+%    \end{macrocode}
+% Some notes: 1) We use ``pt'' as dummy unit of measure here just to do the
+% floating point arithmetic and we use |\strip@pt| at the end.  2) Here
+% |\lplx@maybeskip| serves as a flag that if set, asserts the link was entirely
+% cropped out of the picture.  Initially it expands to an empty string but when
+% set it expands to |\p@<\z@\relax| (=``|1pt < 0pt|''), so it can be placed in
+% front of all |\ifdim|'s so that they are skipped if the link was determined to
+% be out of the picture.
+%    \begin{macrocode}
+  \def\lplx@maybeskip{}%
+  \def\lplx@setskip{\def\lplx@maybeskip{\p@<\z@\relax}}%
+  \lplx@tmpx=#1pt\relax
+  \lplx@tmpy=#2pt\relax
+  \lplx@tmpw=#3pt\relax
+  \lplx@tmph=#4pt\relax
+  \ifdim\lplx@maybeskip\lplx@tmpx<\lplxvCropX\p@\relax
+    \ifdim\dimexpr\lplx@tmpx+\lplx@tmpw>\lplxvCropX\p@\relax
+      \lplx@tmpw=\dimexpr\lplx@tmpx+\lplx@tmpw-\lplxvCropX\p@\relax
+      \lplx@tmpx=\lplxvCropX\p@\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw>\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+    \ifdim\lplx@tmpx<\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+      \lplx@tmpw=\dimexpr\lplxvCropX\p@+\lplxvCropW\p@-\lplx@tmpx\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\lplx@tmpy<\lplxvCropY\p@\relax
+    \ifdim\dimexpr\lplx@tmpy+\lplx@tmph>\lplxvCropY\p@\relax
+      \lplx@tmph=\dimexpr\lplx@tmpy+\lplx@tmph-\lplxvCropY\p@\relax
+      \lplx@tmpy=\lplxvCropY\p@\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph>\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+    \ifdim\lplx@tmpy<\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+      \lplx@tmph=\dimexpr\lplxvCropY\p@+\lplxvCropH\p@-\lplx@tmpy\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\p@>\z@\relax
+    \edef\x{\noexpand\lplx@doputlink%
+      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}{\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
+    \message{*****\detokenize\expandafter{\x}*******}%
+    \x{#5}{#6}%
+  \fi
+}%
+
+%    \end{macrocode}
+% 
+%\Finale
+\endinput

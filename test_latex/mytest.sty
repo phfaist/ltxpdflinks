@@ -1,0 +1,36 @@
+\ProvidesPackage{./mytest}
+
+
+\RequirePackage{etoolbox}
+\RequirePackage{hyperref}
+
+
+\DeclareGraphicsExtensions{.lplx,.pdf}
+
+
+\DeclareGraphicsRule{.lplx}{lplx}{*}{}
+
+\def\Ginclude@lplx#1{%
+  \message{<#1>}%
+  \input{#1}%
+}
+
+\def\lplxbbox@def#1#2#3#4{%
+  \def\lplxbboxX{#1}%
+  \def\lplxbboxY{#2}%
+  \def\lplxbboxW{#3}%
+  \def\lplxbboxH{#4}%
+  \ifnum\lplxbboxX>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxbboxX<0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxbboxY>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxbboxY<0\relax\lplx@bboxzerowarn\fi
+}
+\def\lplx@bboxzerowarn{%
+  \PackageWarning{phflplx}{LPLX bounding box is not pinned at (0,0), not supported}}
+
+
+
+
+\newif\iflplxincludepdf
+\lplxincludepdftrue
+

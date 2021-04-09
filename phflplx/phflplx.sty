@@ -1,0 +1,141 @@
+%%
+%% This is file `phflplx.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% phflplx.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2021 by Philippe Faist, philippe.faist@bluewin.ch
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+\ProvidesPackage{phflplx}
+    [2021/04/09 v0.1 phflplx package]
+\RequirePackage{etoolbox}
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{}{%
+    \PackageWarning{phflplx}{The package `hyperref' was not loaded. You
+      probably forgot to load it.}%
+  }%
+}
+\DeclareGraphicsRule{.lplx}{lplx}{*}{}
+\def\Ginclude@lplx#1{%
+  \message{<#1>}%
+  \input{#1}%
+}
+\def\lplxIncludeGraphics{%
+  \edef\x{\noexpand\hbox to 0pt{%
+      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
+  \x
+}
+\newdimen\lplxiBboxWcrdim
+\newdimen\lplxiBboxHcrdim
+\def\lplxSetBbox#1#2#3#4{%
+  \def\lplxiBboxX{#1}%
+  \def\lplxiBboxY{#2}%
+  \def\lplxiBboxW{#3}%
+  \def\lplxiBboxH{#4}%
+  \ifnum\lplxiBboxX>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxX<0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxY>0\relax\lplx@bboxzerowarn\fi
+  \ifnum\lplxiBboxY<0\relax\lplx@bboxzerowarn\fi
+}
+\def\lplx@bboxzerowarn{%
+  \PackageWarning{phflplx}{LPLX bounding box is not pinned at (0,0), not supported}%
+}
+\def\lplx@noscale{1,!}
+\def\lplx@exclam{!}
+\def\lplxSetupScaleAndBbox{%
+  \def\lplx@tmp{\Gin@scalex,\Gin@scaley}%
+  \ifx\lplx@tmp\lplx@noscale%
+    \def\lplxaDoScale{}%
+  \else
+    \ifx\Gin@scaley\lplx@exclam
+      \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}}%
+    \else
+      \ifx\Gin@scalex\lplx@exclam
+        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scaley}}%
+      \else
+        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
+      \fi
+    \fi
+  \fi
+  \edef\lplxvCropX{\Gin@llx}%
+  \edef\lplxvCropY{\Gin@lly}%
+  \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
+  \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
+}
+\def\lplxPutLink{%
+  \ifGin@clip
+    \expandafter\lplx@clipputlink
+  \else
+    \expandafter\lplx@doputlink
+  \fi
+}%
+\def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+  \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
+}%
+\newdimen\lplx@tmpx
+\newdimen\lplx@tmpy
+\newdimen\lplx@tmpw
+\newdimen\lplx@tmph
+\def\lplx@clipputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
+  \def\lplx@maybeskip{}%
+  \def\lplx@setskip{\def\lplx@maybeskip{\p@<\z@\relax}}%
+  \lplx@tmpx=#1pt\relax
+  \lplx@tmpy=#2pt\relax
+  \lplx@tmpw=#3pt\relax
+  \lplx@tmph=#4pt\relax
+  \ifdim\lplx@maybeskip\lplx@tmpx<\lplxvCropX\p@\relax
+    \ifdim\dimexpr\lplx@tmpx+\lplx@tmpw>\lplxvCropX\p@\relax
+      \lplx@tmpw=\dimexpr\lplx@tmpx+\lplx@tmpw-\lplxvCropX\p@\relax
+      \lplx@tmpx=\lplxvCropX\p@\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw>\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+    \ifdim\lplx@tmpx<\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+      \lplx@tmpw=\dimexpr\lplxvCropX\p@+\lplxvCropW\p@-\lplx@tmpx\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\lplx@tmpy<\lplxvCropY\p@\relax
+    \ifdim\dimexpr\lplx@tmpy+\lplx@tmph>\lplxvCropY\p@\relax
+      \lplx@tmph=\dimexpr\lplx@tmpy+\lplx@tmph-\lplxvCropY\p@\relax
+      \lplx@tmpy=\lplxvCropY\p@\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph>\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+    \ifdim\lplx@tmpy<\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+      \lplx@tmph=\dimexpr\lplxvCropY\p@+\lplxvCropH\p@-\lplx@tmpy\relax
+    \else
+      \lplx@setskip
+    \fi
+  \fi
+  \ifdim\lplx@maybeskip\p@>\z@\relax
+    \edef\x{\noexpand\lplx@doputlink%
+      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}{\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
+    \message{*****\detokenize\expandafter{\x}*******}%
+    \x{#5}{#6}%
+  \fi
+}%
+
+\endinput
+%%
+%% End of file `phflplx.sty'.

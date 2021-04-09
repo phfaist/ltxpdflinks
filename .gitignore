@@ -133,3 +133,20 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+# Latex temp files
+*.log
+*.aux
+*.out
+*.synctex.gz
+*.glo
+*.toc
+*.hd
+*.idx
+*.ind
+*.ilg
+*.gls
+*.fls
+*.fdb_latexmk
