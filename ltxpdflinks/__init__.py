@@ -2,8 +2,8 @@
 # ltxpdflinks package
 #
 
-import logging
-logger = logging.getLogger(__name__)
+
+__version__ = '0.1.0'
 
 
 from ._extractor import ExtractedLink, ExtractedGraphicLinks, PdfGraphicLinksExtractor
