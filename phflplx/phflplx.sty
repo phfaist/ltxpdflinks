@@ -35,10 +35,16 @@
   \message{<#1>}%
   \input{#1}%
 }
-\def\lplxIncludeGraphics{%
-  \edef\x{\noexpand\hbox to 0pt{%
-      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
-  \x
+%%\long\def\LPLX#1#2{\begingroup #2\endgroup}
+\let\LPLX\@gobble
+\def\lplxGraphic#1#2{%
+  \def\lplxiGraphicBaseFname{#1}%
+  \def\lplxiGraphicExt{#2}%
+  \def\lplxiGraphicFname{#1#2}%
+  \lplx@IncludeGraphics
+}
+\def\lplxUserSpaceUnitLength#1{%
+  \unitlength=#1\relax
 }
 \newdimen\lplxiBboxWcrdim
 \newdimen\lplxiBboxHcrdim
@@ -47,28 +53,55 @@
   \def\lplxiBboxY{#2}%
   \def\lplxiBboxW{#3}%
   \def\lplxiBboxH{#4}%
-  \ifnum\lplxiBboxX>0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxX<0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxY>0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxY<0\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxX\p@>\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxX\p@<\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxY\p@>\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxY\p@<\z@\relax\lplx@bboxzerowarn\fi
 }
 \def\lplx@bboxzerowarn{%
   \PackageWarning{phflplx}{LPLX bounding box is not pinned at (0,0), not supported}%
 }
+\long\def\lplxPicture#1{%
+  \lplx@SetupScaleAndBbox
+  \lplx@a@DoScale{%
+    \begin{picture}(\lplxvCropW,\lplxvCropH)(\lplxvCropX,\lplxvCropY)%
+      #1%
+    \end{picture}%
+  }%
+}
+\def\lplxPutLink{%
+  \ifGin@clip
+    \expandafter\lplx@clipputlink
+  \else
+    \expandafter\lplx@doputlink
+  \fi
+}
+{\catcode`\%=12\relax
+  \gdef\lplx@percent{%}
+}
+\def\lplxHexChar#1{%
+  \lplx@percent#1%
+}
+\def\lplx@IncludeGraphics{%
+  \edef\x{\noexpand\hbox to 0pt{%
+      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
+  \x
+}
 \def\lplx@noscale{1,!}
 \def\lplx@exclam{!}
-\def\lplxSetupScaleAndBbox{%
+\def\lplx@a@DoScale{}%
+\def\lplx@SetupScaleAndBbox{%
   \def\lplx@tmp{\Gin@scalex,\Gin@scaley}%
   \ifx\lplx@tmp\lplx@noscale%
-    \def\lplxaDoScale{}%
+    \def\lplx@a@DoScale{}%
   \else
     \ifx\Gin@scaley\lplx@exclam
-      \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}}%
+      \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scalex}}%
     \else
       \ifx\Gin@scalex\lplx@exclam
-        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scaley}}%
+        \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scaley}}%
       \else
-        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
+        \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
       \fi
     \fi
   \fi
@@ -77,13 +110,6 @@
   \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
   \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
 }
-\def\lplxPutLink{%
-  \ifGin@clip
-    \expandafter\lplx@clipputlink
-  \else
-    \expandafter\lplx@doputlink
-  \fi
-}%
 \def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
   \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
 }%
@@ -106,7 +132,8 @@
       \lplx@setskip
     \fi
   \fi
-  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw>\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw
+        >\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
     \ifdim\lplx@tmpx<\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
       \lplx@tmpw=\dimexpr\lplxvCropX\p@+\lplxvCropW\p@-\lplx@tmpx\relax
     \else
@@ -121,7 +148,8 @@
       \lplx@setskip
     \fi
   \fi
-  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph>\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph
+        >\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
     \ifdim\lplx@tmpy<\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
       \lplx@tmph=\dimexpr\lplxvCropY\p@+\lplxvCropH\p@-\lplx@tmpy\relax
     \else
@@ -130,8 +158,8 @@
   \fi
   \ifdim\lplx@maybeskip\p@>\z@\relax
     \edef\x{\noexpand\lplx@doputlink%
-      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}{\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
-    \message{*****\detokenize\expandafter{\x}*******}%
+      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}%
+      {\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
     \x{#5}{#6}%
   \fi
 }%

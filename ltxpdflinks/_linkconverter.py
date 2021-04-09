@@ -2,6 +2,7 @@ import re
 import logging
 logger = logging.getLogger(__name__)
 
+import urllib.parse
 
 
 _rx_latexrefurl = re.compile(r'^latexref://(?P<ref_type>ref|cite)/(?P<ref_target>.*)$',
@@ -31,6 +32,7 @@ class LatexRefsLinkConverter:
                     continue
                 # found match! change link type.
                 ref_type, ref_target = m.group('ref_type'), m.group('ref_target')
+                ref_target = urllib.parse.unquote(ref_target)
                 if ref_type == 'ref':
                     lnk.link_type = 'latex-ref'
                     lnk.link_target = ref_target

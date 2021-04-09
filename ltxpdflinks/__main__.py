@@ -7,7 +7,6 @@ import os.path
 import sys
 import argparse
 import logging
-logger = logging.getLogger(__name__)
 
 
 from ._extractor import ExtractedLink, ExtractedGraphicLinks, PdfGraphicLinksExtractor
@@ -27,6 +26,13 @@ def main(argv=None):
                         "with '.lplx' extension).  This option cannot be "
                         "used when multiple input files are specified.")
 
+    parser.add_argument('-q', '--quiet', dest='logging_level', action='store_const',
+                        const=logging.ERROR, default=logging.INFO,
+                        help="Suppress warning messages")
+    parser.add_argument('-v', '--verbose', dest='logging_level', action='store_const',
+                        const=logging.DEBUG,
+                        help="Verbose output")
+
     parser.add_argument("fnames", nargs='+',
                         metavar='file',
                         help="Graphics file to extract links from")
@@ -36,11 +42,18 @@ def main(argv=None):
         parsekwargs.update(argv=argv)
     args = parser.parse_args(**parsekwargs)
 
+    logging.basicConfig()
+    logging.getLogger().setLevel(args.logging_level)
+    logger = logging.getLogger(__name__)
+
+
     if args.output_file is not None:
         if len(args.fnames) > 1:
             raise ValueError("You cannot use -o when you specify multiple files")
 
     for fname in args.fnames:
+
+        logger.info("Inspecting ‘%s’", fname)
 
         extractor = PdfGraphicLinksExtractor(fname)
         extracted = extractor.extractGraphicLinks()

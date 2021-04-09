@@ -92,21 +92,30 @@
 %
 % \section{Introduction}
 %
+% This package is designed to be used in conjunction with the |ltxpdflinks|
+% command-line utility to extract PDF links into |.lplx| files.
+%
 % Usage:
 %
+% \begin{enumerate}[label=\arabic*.]
+% \item Run |ltxpdflinks| on your PDF files before you compile your document:
+% \begin{verbatim}
+% > ltxpdflinks myfigure.pdf
+% \end{verbatim}
+%
+% \item Use the following commands in your document preamble:
 % \begin{verbatim}
 % \usepackage{phflplx}
 % \DeclareGraphicsExtensions{.lplx,.pdf}
 % \end{verbatim}
 %
-% This package is designed to be used in conjunction with the |ltxpdflinks|
-% command-line utility to extract PDF links into |.lplx| files.
+% \item Drop a copy of |phflplx.sty| in the same folder as your document in case
+%   you don't have it installed user-wide or system-wide.
 %
-% Make sure to process your PDF files before you compile your document:
-% \begin{verbatim}
-% > ltxpdflinks myfigure.pdf
-% \end{verbatim}
+% \item Enjoy!
+% \end{enumerate}
 % 
+%
 % In fact, LPLX files are simple LaTeX sources that are included directly by the
 % graphics driver.  The LPLX file typically includes the PDF itself using a
 % lower-level graphics command and draws invisible hyperlinks on top of the
@@ -135,7 +144,6 @@
 }
 %    \end{macrocode}
 %
-%
 % Declaring the graphics rule for the LPLX extension.  Note that the LPLX file
 % has the line |%%BoundingBox 0 0 <W> <H>| so that the size of the graphics can
 % be parsed by the default \pkgname{graphics} graphic size inspector, which is
@@ -152,18 +160,52 @@
 }
 %    \end{macrocode}
 %
-% This command gets called from within the LPLX files to actually include the
-% underlying graphics.
+%
+% \subsection{Commands called from the LPLX file}
+%
+% The contents of the LPLX file is wrapped around the |\LPLX| macro.  The first
+% argument is a dictionary |key1=value1,key2=value2,...| of meta-information
+% about the current LPLX file format.  Keys should include |version| (a basic
+% file format version), |ltxpdflinksversion| (version of |ltxpdflinks| used to
+% generate this file), |features| (a list of ``features'' the file provides,
+% might add new ``features'' in the future).  The ``|bbox|'' feature means that
+% the LPLX file makes a call to |\lplxSetBbox| with the graphic bounding box
+% information.
 %    \begin{macrocode}
-\def\lplxIncludeGraphics{%
-  \edef\x{\noexpand\hbox to 0pt{%
-      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
-  \x
+%%\long\def\LPLX#1#2{\begingroup #2\endgroup}
+\let\LPLX\@gobble
+%    \end{macrocode}
+%
+% In the contents of the LPLX data (second argument of |\LPLX|), we have a
+% sequence of |\lplxAbcDef| commands in a declarative-style interface.
+% The commands are the following.
+%
+% \begin{macro}{\lplxGraphic}
+%   Specify the original (PDF) graphic file name.  Specify base file name (|#1|)
+%   and extension (|#2| including dot) separately
+%    \begin{macrocode}
+\def\lplxGraphic#1#2{%
+  \def\lplxiGraphicBaseFname{#1}%
+  \def\lplxiGraphicExt{#2}%
+  \def\lplxiGraphicFname{#1#2}%
+  \lplx@IncludeGraphics
 }
 %    \end{macrocode}
-% 
-% Declare some simple helpers that are used in our automatically generated LPLX
-% files.
+% \end{macro}
+%
+% \begin{macro}{\lplxUserSpaceUnitLength}
+%   Set the base unit of the graphic.  Width, height, coordinates, etc., are
+%   specified in this unit.  Usually this is $1\textrm{ bp} = 1/72\textrm{ in}$.
+%    \begin{macrocode}
+\def\lplxUserSpaceUnitLength#1{%
+  \unitlength=#1\relax
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\lplxSetBbox}
+%   Declare what the bounding box of the graphic is.  Currently the two first
+%   arguments should be |{0}{0}|.
 %    \begin{macrocode}
 \newdimen\lplxiBboxWcrdim
 \newdimen\lplxiBboxHcrdim
@@ -172,64 +214,44 @@
   \def\lplxiBboxY{#2}%
   \def\lplxiBboxW{#3}%
   \def\lplxiBboxH{#4}%
-  \ifnum\lplxiBboxX>0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxX<0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxY>0\relax\lplx@bboxzerowarn\fi
-  \ifnum\lplxiBboxY<0\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxX\p@>\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxX\p@<\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxY\p@>\z@\relax\lplx@bboxzerowarn\fi
+  \ifdim\lplxiBboxY\p@<\z@\relax\lplx@bboxzerowarn\fi
 }
 \def\lplx@bboxzerowarn{%
   \PackageWarning{phflplx}{LPLX bounding box is not pinned at (0,0), not supported}%
 }
 %    \end{macrocode}
-% 
-% Utility to set up the appropriate command arguments to use for |\scalebox|,
-% etc.
+% \end{macro}
+%
+% \begin{macro}{\lplxPicture}
+%   Gather all the links you want to place as an argument to a call to
+%   |\lplxPicture|.
 %    \begin{macrocode}
-\def\lplx@noscale{1,!}
-\def\lplx@exclam{!}
-\def\lplxSetupScaleAndBbox{%
-%    \end{macrocode}
-% 
-% First, we locally define a macro |\lplxaDoScale{...}| that will generate the
-% correct |\scalebox| call with the given contents, according to the requested
-% size.
-%    \begin{macrocode}
-  \def\lplx@tmp{\Gin@scalex,\Gin@scaley}%
-  \ifx\lplx@tmp\lplx@noscale%
-    \def\lplxaDoScale{}%
-  \else
-    \ifx\Gin@scaley\lplx@exclam
-      \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}}%
-    \else
-      \ifx\Gin@scalex\lplx@exclam
-        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scaley}}%
-      \else
-        \edef\lplxaDoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
-      \fi
-    \fi
-  \fi
-%    \end{macrocode}
-% Second, we need to take care of setting the bounding box correctly.  Define
-% |\lplxvCropX| and |\lplxvCropY| which are the $(X,Y)$ position of the lower
-% left corner the part of the image we want to pick out, in user space units.
-% Define |\lplxvCropW| and |\lplxvCropH| as the requested width \& height of the
-% subimage we want to use.
-%    \begin{macrocode}
-  \edef\lplxvCropX{\Gin@llx}%
-  \edef\lplxvCropY{\Gin@lly}%
-  \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
-  \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
+\long\def\lplxPicture#1{%
+  \lplx@SetupScaleAndBbox
+  \lplx@a@DoScale{%
+    \begin{picture}(\lplxvCropW,\lplxvCropH)(\lplxvCropX,\lplxvCropY)%
+      #1%
+    \end{picture}%
+  }%
 }
 %    \end{macrocode}
-%
-% Finally, a utility that will help us place links in the picture environment.
-% Usage is
+% \end{macro}
+% 
+% Finally, individual links are placed with |\lplxPutLink|.  Usage is
 % |\lplxPutLink|\marg{x}\marg{y}\marg{w}\marg{h}\marg{hyperstartcmd}\marg{hyperendtokens}.
 % Here \marg{hyperstartcmd} and \marg{hyperendtokens} are any tokens that will
 % be inserted immediately before and immediately after an invisible rule of the
 % given width and height.  The rule will be in curly braces, so it can be
 % considered as a mandatory argument to the last macro token in
-% \marg{hyperstartcmd}.
+% \marg{hyperstartcmd}.  Don't forget to escape URL characters that have a LaTeX
+% meaning that is very special (e.g. |#| $\to$
+% |%23|) because these characters are already in a macro argument and
+% will have catcodes assigned before |\href| and friends get the chance to take
+% care of catcodes etc.  [Actually, some characters still work, like |^|, |_|,
+% |&|, \ldots\space  I'm not sure what determines this. (?)]
 %    \begin{macrocode}
 \def\lplxPutLink{%
   \ifGin@clip
@@ -237,7 +259,84 @@
   \else
     \expandafter\lplx@doputlink
   \fi
-}%
+}
+%    \end{macrocode}
+%
+% A simple helper to percent-quote special characters in an URL.
+%
+%    \begin{macrocode}
+{\catcode`\%=12\relax
+  \gdef\lplx@percent{%}
+}
+\def\lplxHexChar#1{%
+  \lplx@percent#1%
+}
+%    \end{macrocode}
+% 
+%
+% \subsection{Internal Implementation Commands}
+%
+%
+%
+% \begin{macro}{\lplx@IncludeGraphics}
+%   This command actually includes the underlying graphics.  TODO: support for
+%   |\lplxiGraphicFname| in case the PDF base file name differs from the LPLX
+%   file base name? (Though that sounds like asking for trouble.)
+%    \begin{macrocode}
+\def\lplx@IncludeGraphics{%
+  \edef\x{\noexpand\hbox to 0pt{%
+      \noexpand\Ginclude@graphics{\Gin@base\lplxiGraphicExt}}}%
+  \x
+}
+%    \end{macrocode}
+% \end{macro}
+% 
+% \begin{macro}{\lplx@SetupScaleAndBbox}
+%   Utility to set up the appropriate command arguments to use for |\scalebox|,
+%   etc.
+%    \begin{macrocode}
+\def\lplx@noscale{1,!}
+\def\lplx@exclam{!}
+\def\lplx@a@DoScale{}%
+\def\lplx@SetupScaleAndBbox{%
+%    \end{macrocode}
+% 
+% First, we locally define a macro |\lplx@a@DoScale{...}| that will generate the
+% correct |\scalebox| call with the given contents, according to the requested
+% size.
+%    \begin{macrocode}
+  \def\lplx@tmp{\Gin@scalex,\Gin@scaley}%
+  \ifx\lplx@tmp\lplx@noscale%
+    \def\lplx@a@DoScale{}%
+  \else
+    \ifx\Gin@scaley\lplx@exclam
+      \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scalex}}%
+    \else
+      \ifx\Gin@scalex\lplx@exclam
+        \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scaley}}%
+      \else
+        \edef\lplx@a@DoScale{\noexpand\scalebox{\Gin@scalex}[\Gin@scaley]}%
+      \fi
+    \fi
+  \fi
+%    \end{macrocode}
+% Second, we need to take care of setting the bounding box correctly.  Define
+% the macros |\lplxvCropX| and |\lplxvCropY| which are the $(X,Y)$ position of
+% the lower left corner the part of the image we want to pick out, in user space
+% units.  Define |\lplxvCropW| and |\lplxvCropH| as the requested width \&
+% height of the subimage we want to use.
+%    \begin{macrocode}
+  \edef\lplxvCropX{\Gin@llx}%
+  \edef\lplxvCropY{\Gin@lly}%
+  \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
+  \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% Tools to place links \& clip them if necessary.
+%    \begin{macrocode}
 \def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
   \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
 }%
@@ -251,9 +350,9 @@
 % floating point arithmetic and we use |\strip@pt| at the end.  2) Here
 % |\lplx@maybeskip| serves as a flag that if set, asserts the link was entirely
 % cropped out of the picture.  Initially it expands to an empty string but when
-% set it expands to |\p@<\z@\relax| (=``|1pt < 0pt|''), so it can be placed in
-% front of all |\ifdim|'s so that they are skipped if the link was determined to
-% be out of the picture.
+% set it expands to ``|\p@<\z@\relax|'' (= ``|1pt < 0pt|''), so it can be placed
+% in front of all |\ifdim|'s so that they are skipped if the link was determined
+% to be out of the picture.
 %    \begin{macrocode}
   \def\lplx@maybeskip{}%
   \def\lplx@setskip{\def\lplx@maybeskip{\p@<\z@\relax}}%
@@ -269,7 +368,8 @@
       \lplx@setskip
     \fi
   \fi
-  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw>\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpx+\lplx@tmpw
+        >\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
     \ifdim\lplx@tmpx<\dimexpr\lplxvCropX\p@+\lplxvCropW\p@\relax
       \lplx@tmpw=\dimexpr\lplxvCropX\p@+\lplxvCropW\p@-\lplx@tmpx\relax
     \else
@@ -284,7 +384,8 @@
       \lplx@setskip
     \fi
   \fi
-  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph>\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
+  \ifdim\lplx@maybeskip\dimexpr\lplx@tmpy+\lplx@tmph
+        >\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
     \ifdim\lplx@tmpy<\dimexpr\lplxvCropY\p@+\lplxvCropH\p@\relax
       \lplx@tmph=\dimexpr\lplxvCropY\p@+\lplxvCropH\p@-\lplx@tmpy\relax
     \else
@@ -293,8 +394,8 @@
   \fi
   \ifdim\lplx@maybeskip\p@>\z@\relax
     \edef\x{\noexpand\lplx@doputlink%
-      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}{\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
-    \message{*****\detokenize\expandafter{\x}*******}%
+      {\strip@pt\lplx@tmpx}{\strip@pt\lplx@tmpy}%
+      {\strip@pt\lplx@tmpw}{\strip@pt\lplx@tmph}}%
     \x{#5}{#6}%
   \fi
 }%
