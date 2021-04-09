@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "ltxpdflinks"
+version = "0.1.0"
+description = "Extract links in PDF graphics for inclusion in LaTeX documents"
+authors = ["Philippe Faist <philippe.faist@bluewin.ch>"]
+license = "MIT"
+homepage = "https://github.com/phfaist/ltxpdflinks"
+repository = "https://github.com/phfaist/ltxpdflinks"
+readme = "README.rst"
+classifiers = [
+        "Development Status :: 4 - Beta",
+        "License :: OSI Approved :: MIT License",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+PyPDF2 = "^1.26.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.0"
+sphinx = "^3.5.3"
+sphinx-issues = "^1.2.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
