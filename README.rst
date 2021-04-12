@@ -49,7 +49,7 @@ To compile your document:
    ``\DeclareGraphicsExtensions`` argument, too.  See doc for the
    `graphicx package <https://mirror.clientvps.com/CTAN/macros/latex/required/graphics/grfguide.pdf>`_.
 
-2. Run the |ltxpdflinks| command-line program for all your PDF files that
+2. Run the ``ltxpdflinks`` command-line program for all your PDF files that
    contain links::
 
      > ltxpdflinks myfigure1.pdf
