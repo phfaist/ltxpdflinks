@@ -8,22 +8,47 @@ import sys
 import argparse
 import logging
 
+import colorlog
+
 
 from ._extractor import ExtractedLink, ExtractedGraphicLinks, PdfGraphicLinksExtractor
 from ._linkconverter import LatexRefsLinkConverter
 from ._lplxexporter import LplxPictureEnvExporter
+from . import __version__ as version_str
+
+
+def setup_logging(level):
+    handler = colorlog.StreamHandler()
+    handler.setFormatter(colorlog.TTYColoredFormatter(
+        stream=sys.stderr,
+        fmt='%(log_color)s%(levelname)-8s %(message)s' #'  [%(name)s]'
+    ))
+
+    root = colorlog.getLogger()
+    root.addHandler(handler)
+
+    root.setLevel(level)
 
 
 
 def main(argv=None):
 
-    parser = argparse.ArgumentParser(prog='ltxpdflinks',
-                                     epilog='Have loads of fun!')
+    parser = argparse.ArgumentParser(
+        prog='ltxpdflinks',
+        epilog='Have loads of fun!',
+        add_help=False, # custom help option
+    )
+
+    parser.add_argument("fnames", nargs='+',
+                        metavar='file',
+                        help="Graphics PDF file(s) to extract links from")
 
     parser.add_argument("-o", "--output", dest='output_file', default=None,
-                        help="File where to output LaTeX commands from "
-                        "extracted links (default same file name but "
-                        "with '.lplx' extension).  This option cannot be "
+                        help="Specify custom output file name where to write "
+                        "the LPLX content (LaTeX commands resulting from "
+                        "extracted links).  By default an .lplx file is created "
+                        "with the same base file name as the input file. "
+                        "This option cannot be "
                         "used when multiple input files are specified.")
 
     parser.add_argument("-D", "--doctex", dest='include_comments_catcode',
@@ -32,25 +57,30 @@ def main(argv=None):
                         help="Include special commands for use in "
                         "package documentation files")
 
-    parser.add_argument('-q', '--quiet', dest='logging_level', action='store_const',
+    parser.add_argument('-q', '--quiet', dest='verbosity', action='store_const',
                         const=logging.ERROR, default=logging.INFO,
                         help="Suppress warning messages")
-    parser.add_argument('-v', '--verbose', dest='logging_level', action='store_const',
-                        const=logging.DEBUG,
-                        help="Verbose output")
 
-    parser.add_argument("fnames", nargs='+',
-                        metavar='file',
-                        help="Graphics file to extract links from")
+    parser.add_argument('-v', '--verbose', dest='verbosity', action='store_const', 
+                        const=logging.DEBUG,
+                        help='verbose mode')
+
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {}'.format(version_str))
+    parser.add_argument('--help', action='help',
+                        help='show this help message and exit')
+
 
     parsekwargs={}
     if argv is not None:
         parsekwargs.update(argv=argv)
     args = parser.parse_args(**parsekwargs)
 
-    logging.basicConfig()
-    logging.getLogger().setLevel(args.logging_level)
+    setup_logging(level=args.verbosity)
+
     logger = logging.getLogger(__name__)
+
+    logger.info("Welcome to ltxpdflinks {version}".format(version=version_str))
 
     if args.output_file is not None:
         if len(args.fnames) > 1:
@@ -58,8 +88,8 @@ def main(argv=None):
 
     for fname in args.fnames:
 
-        logger.info("Extracting links from ‘%s’", fname)
-
+        logger.debug("Extracting links from ‘%s’", fname)
+ 
         extractor = PdfGraphicLinksExtractor(fname)
         extracted = extractor.extractGraphicLinks()
         LatexRefsLinkConverter().convertLinks(extracted)
@@ -85,6 +115,7 @@ def main(argv=None):
             sys.stdout.write(exported)
             continue
 
+        logger.info("Writing LPLX file ‘%s’", foutput)
         with open(foutput, 'w') as f:
             f.write(exported)
             continue
