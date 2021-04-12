@@ -29,10 +29,6 @@ To get started:
 
      https://github.com/phfaist/ltxpdflinks/releases
 
-[Self-note TODO: I still need to publish releases on github.com & on PyPI! For
-now, you need to run ``poetry build``, ``pip3 install
-dist/ltxpdflinks-0.1.0.tar.gz`` and ``(cd phflplx && latex phflplx.ins)``. ]
-
 To compile your document:
 
 1. Drop the file ``phflplx.sty`` in the same folder as your latex source file,
