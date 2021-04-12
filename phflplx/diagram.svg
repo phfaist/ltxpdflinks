@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="70mm"
+   viewBox="0 0 100 70"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
+   sodipodi:docname="diagram.svg">
+  <defs
+     id="defs2">
+    <rect
+       x="17.696766"
+       y="38.365505"
+       width="17.988028"
+       height="11.089053"
+       id="rect967" />
+    <rect
+       x="17.696766"
+       y="38.365505"
+       width="23.251139"
+       height="13.225489"
+       id="rect967-7" />
+    <rect
+       x="17.696766"
+       y="38.365505"
+       width="17.988028"
+       height="11.089053"
+       id="rect980" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.9585736"
+     inkscape:cx="206.52446"
+     inkscape:cy="153.43907"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g896"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1461"
+     inkscape:window-height="898"
+     inkscape:window-x="219"
+     inkscape:window-y="1223"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <ellipse
+       style="fill:#c9dee1;fill-opacity:1;stroke:none;stroke-width:1.08018;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path1022"
+       cx="46.335804"
+       cy="8.2404776"
+       rx="5.9439516"
+       ry="6.0790415" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <a
+       id="a2951"
+       target=""
+       xlink:href="latexref://ref/sec:intro">
+      <rect
+         style="fill:#d1dfc4;fill-opacity:1;stroke:none;stroke-width:0.839303"
+         id="rect833"
+         width="30.974009"
+         height="6.3717961"
+         x="9.70856"
+         y="20.617584" />
+    </a>
+    <a
+       id="a2954"
+       xlink:href="latexref://ref/sec:implementation">
+      <rect
+         style="fill:#d1bec4;fill-opacity:1;stroke:none;stroke-width:0.872059"
+         id="rect833-5"
+         width="33.438866"
+         height="6.3717961"
+         x="55.128895"
+         y="20.617584" />
+    </a>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="13.28166"
+       y="24.836216"
+       id="text852"><tspan
+         sodipodi:role="line"
+         id="tspan850"
+         x="13.28166"
+         y="24.836216"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">Package Doc</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="57.975033"
+       y="24.734079"
+       id="text852-5"><tspan
+         sodipodi:role="line"
+         id="tspan850-9"
+         x="57.975033"
+         y="24.734079"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">Implementation</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="44.54348"
+       y="11.091853"
+       id="text874"><tspan
+         sodipodi:role="line"
+         id="tspan872"
+         x="44.54348"
+         y="11.091853"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">?</tspan></text>
+    <g
+       id="g896">
+      <path
+         style="fill:#b3b94c;fill-opacity:1;stroke:none;stroke-width:1.323;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path880"
+         d="m 39.130978,7.8801001 c -1.297909,0.1453076 -2.624159,-0.066185 -3.912225,0.184971 -0.363222,0.070824 -0.713441,0.1969604 -1.07016,0.2954404 -1.473496,0.7961061 -1.925894,0.9894898 -3.534942,2.2702355 -0.349747,0.278387 -0.621109,0.643945 -0.909658,0.985359 -0.755857,0.894343 -1.237383,1.726436 -1.777775,2.748515 -0.41093,0.924417 -0.230124,0.479537 -0.550646,1.331266 l 1.658326,-0.774842 v 0 c 0.270748,-0.812611 0.114255,-0.387471 0.479314,-1.271756 0.502447,-0.992738 0.950984,-1.800425 1.685452,-2.65811 0.288311,-0.336678 0.877414,-0.881214 1.397633,-1.3147282 0.729253,-0.4652724 0.641483,-0.4590726 1.246999,-0.588584 0.701839,-0.1437384 1.195326,-0.1136587 1.898081,-0.105505 0.594503,0.0069 1.189429,0.017431 1.782328,0.06549 z"
+         sodipodi:nodetypes="cscsscccscsccscc" />
+      <path
+         style="fill:#b3b94c;fill-opacity:1;stroke:none;stroke-width:1.32292"
+         id="path882"
+         d="m 25.312192,13.707463 c 0.595369,1.024646 0.919145,2.181983 1.24247,3.315095 0.0366,0.0973 0.09522,0.402079 0.275524,0.419355 0.115592,0.01108 0.236302,-0.0285 0.337894,-0.08474 0.696426,-0.385504 1.365936,-0.817802 2.04446,-1.234008 0.362198,-0.222173 0.714229,-0.460558 1.074446,-0.685928 1.299472,-0.74082 -0.07897,0.04162 -0.58057,0.35226 -0.195937,0.121342 0.40893,-0.212727 0.614865,-0.316201 0,0 1.50122,-1.202837 1.50122,-1.202837 v 0 c -1.099484,0.568723 -2.167237,1.195654 -3.232714,1.825423 -0.186542,0.117335 -0.373761,0.233603 -0.559631,0.352005 -0.184396,0.117464 -0.749495,0.447548 -0.551145,0.355582 0.410305,-0.19024 0.778883,-0.463265 1.189982,-0.651782 0.08571,-0.03931 -0.121708,0.148316 -0.201531,0.198511 -0.166211,0.104519 -0.222268,-0.155451 -0.267573,-0.232827 -0.417832,-1.11802 -0.774837,-2.257224 -1.191892,-3.375474 0,0 -1.695805,0.965564 -1.695805,0.965564 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="60.955631"
+         y="67.477417"
+         id="text921"><tspan
+           sodipodi:role="line"
+           id="tspan919"
+           x="60.955631"
+           y="67.477417"
+           style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">Alternatives:</tspan></text>
+      <a
+         id="a2964"
+         xlink:href="https://ctan.org/pkg/pax">
+        <text
+           xml:space="preserve"
+           style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="79.575127"
+           y="67.476219"
+           id="text925"><tspan
+             sodipodi:role="line"
+             id="tspan923"
+             x="79.575127"
+             y="67.476219"
+             style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">pax</tspan></text>
+      </a>
+      <text
+         xml:space="preserve"
+         style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="86.892754"
+         y="67.520134"
+         id="text925-4"><tspan
+           sodipodi:role="line"
+           id="tspan923-3"
+           x="86.892754"
+           y="67.520134"
+           style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">/</tspan></text>
+      <a
+         id="a2968"
+         xlink:href="https://www.overleaf.com/learn/latex/TikZ_package">
+        <text
+           xml:space="preserve"
+           style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="90.274666"
+           y="67.173271"
+           id="text925-9"><tspan
+             sodipodi:role="line"
+             id="tspan923-0"
+             x="90.274666"
+             y="67.173271"
+             style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.175px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Light Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">TiKZ</tspan></text>
+      </a>
+      <g
+         id="g1020"
+         transform="translate(1.0807185,-0.54035925)">
+        <path
+           sodipodi:type="star"
+           style="fill:#54adae;fill-opacity:1;stroke:none;stroke-width:1.323;stroke-miterlimit:4;stroke-dasharray:none"
+           id="path963"
+           sodipodi:sides="5"
+           sodipodi:cx="19.993292"
+           sodipodi:cy="49.172695"
+           sodipodi:r1="19.420071"
+           sodipodi:r2="9.7100344"
+           sodipodi:arg1="0.51655768"
+           sodipodi:arg2="1.1448762"
+           inkscape:flatsided="false"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 36.879518,58.764072 24.005079,58.015225 16.089482,68.196349 12.823257,55.720623 0.6943781,51.338583 11.550179,44.377007 l 0.419538,-12.889373 9.97548,8.173235 12.388167,-3.584031 -4.690616,12.012913 z"
+           inkscape:transform-center-x="0.83403002"
+           inkscape:transform-center-y="1.0244057"
+           transform="matrix(1.2415472,-0.20059318,0.11290064,0.69878483,-5.4086367,13.655329)" />
+        <a
+           id="a2957"
+           xlink:href="https://python.org/">
+          <text
+             xml:space="preserve"
+             id="text965"
+             style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.23332999999999959px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Semi-Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect967);"
+             transform="translate(0.94562868,0.13508981)"><tspan
+               x="17.697266"
+               y="42.116172"><tspan
+                 style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.23333px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Semi-Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">using </tspan></tspan><tspan
+               x="17.697266"
+               y="47.407836"><tspan
+                 style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.23333px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Semi-Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">python</tspan></tspan></text>
+        </a>
+      </g>
+      <g
+         id="g1015"
+         transform="rotate(-19.367222,89.036255,30.561997)">
+        <path
+           sodipodi:type="star"
+           style="fill:#b37b4c;fill-opacity:1;stroke:none;stroke-width:1.323;stroke-miterlimit:4;stroke-dasharray:none"
+           id="path963-1"
+           sodipodi:sides="5"
+           sodipodi:cx="19.993292"
+           sodipodi:cy="49.172695"
+           sodipodi:r1="19.420071"
+           sodipodi:r2="9.7100344"
+           sodipodi:arg1="0.51655768"
+           sodipodi:arg2="1.1448762"
+           inkscape:flatsided="false"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           d="M 36.879518,58.764072 24.005079,58.015225 16.089482,68.196349 12.823257,55.720623 0.6943781,51.338583 11.550179,44.377007 l 0.419538,-12.889373 9.97548,8.173235 12.388167,-3.584031 -4.690616,12.012913 z"
+           inkscape:transform-center-x="1.5171545"
+           inkscape:transform-center-y="0.47375877"
+           transform="matrix(1.2576474,0,0,0.70784659,41.080663,4.1657414)" />
+        <a
+           id="a2961"
+           xlink:href="https://www.overleaf.com/learn/latex/Referencing_Figures">
+          <text
+             xml:space="preserve"
+             id="text965-8"
+             style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.23332999999999959px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Semi-Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect967-7);"
+             transform="translate(40.324413,-4.8435434)"><tspan
+               x="17.697266"
+               y="42.116172"><tspan
+                 style="shape-inside:url(#rect967-7)">LaTeX </tspan></tspan><tspan
+               x="17.697266"
+               y="47.407836"><tspan
+                 style="shape-inside:url(#rect967-7)">references</tspan></tspan></text>
+        </a>
+      </g>
+    </g>
+    <g
+       id="g896-2"
+       transform="matrix(-1,0,0,1,92.231921,-0.22077184)">
+      <path
+         style="fill:#b3004c;fill-opacity:1;stroke:none;stroke-width:1.323;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path880-7"
+         d="m 39.130978,7.8801001 c -1.297909,0.1453076 -2.624159,-0.066185 -3.912225,0.184971 -0.363222,0.070824 -0.713441,0.1969604 -1.07016,0.2954404 -1.473496,0.7961061 -1.925894,0.9894898 -3.534942,2.2702355 -0.349747,0.278387 -0.621109,0.643945 -0.909658,0.985359 -0.755857,0.894343 -1.237383,1.726436 -1.777775,2.748515 -0.41093,0.924417 -0.230124,0.479537 -0.550646,1.331266 l 1.658326,-0.774842 v 0 c 0.270748,-0.812611 0.114255,-0.387471 0.479314,-1.271756 0.502447,-0.992738 0.950984,-1.800425 1.685452,-2.65811 0.288311,-0.336678 0.877414,-0.881214 1.397633,-1.3147282 0.729253,-0.4652724 0.641483,-0.4590726 1.246999,-0.588584 0.701839,-0.1437384 1.195326,-0.1136587 1.898081,-0.105505 0.594503,0.0069 1.189429,0.017431 1.782328,0.06549 z"
+         sodipodi:nodetypes="cscsscccscsccscc" />
+      <path
+         style="fill:#b3004c;fill-opacity:1;stroke:none;stroke-width:1.32292"
+         id="path882-3"
+         d="m 25.312192,13.707463 c 0.595369,1.024646 0.919145,2.181983 1.24247,3.315095 0.0366,0.0973 0.09522,0.402079 0.275524,0.419355 0.115592,0.01108 0.236302,-0.0285 0.337894,-0.08474 0.696426,-0.385504 1.365936,-0.817802 2.04446,-1.234008 0.362198,-0.222173 0.714229,-0.460558 1.074446,-0.685928 1.299472,-0.74082 -0.07897,0.04162 -0.58057,0.35226 -0.195937,0.121342 0.40893,-0.212727 0.614865,-0.316201 0,0 1.50122,-1.202837 1.50122,-1.202837 v 0 c -1.099484,0.568723 -2.167237,1.195654 -3.232714,1.825423 -0.186542,0.117335 -0.373761,0.233603 -0.559631,0.352005 -0.184396,0.117464 -0.749495,0.447548 -0.551145,0.355582 0.410305,-0.19024 0.778883,-0.463265 1.189982,-0.651782 0.08571,-0.03931 -0.121708,0.148316 -0.201531,0.198511 -0.166211,0.104519 -0.222268,-0.155451 -0.267573,-0.232827 -0.417832,-1.11802 -0.774837,-2.257224 -1.191892,-3.375474 0,0 -1.695805,0.965564 -1.695805,0.965564 z" />
+    </g>
+  </g>
+</svg>

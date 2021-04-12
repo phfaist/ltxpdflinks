@@ -31,6 +31,7 @@
 \usepackage{lipsum}
 \usepackage[preset=xpkgdoc]{phfnote}
 \usepackage{phflplx}
+\DeclareGraphicsExtensions{.lplx,.pdf}
 
 \usepackage{needspace}
 
@@ -91,6 +92,7 @@
 % \inlinetoc
 %
 % \section{Introduction}
+% \label{sec:intro}
 %
 % This package is designed to be used in conjunction with the |ltxpdflinks|
 % command-line utility to extract PDF links into |.lplx| files.
@@ -122,10 +124,21 @@
 % graphics.  (The LPLX file also takes care of resizing and cropping the
 % graphics if necessary.)
 %
+% Figure~\ref{fig:Test} provides a glimpse of what you can do with |ltxpdflinks|
+% and \pkgname{phflplx}.
+% \begin{figure}
+%   \centering
+%   \includegraphics{diagram}
+%   \caption{A diagram with clickable PDF hyperlinks, including internal links
+%   to other parts of the document.}
+%   \label{fig:Test}
+% \end{figure}
+%
 %
 % \StopEventually{\PrintChangesAndIndex}
 %
 % \section{Implementation}
+% \label{sec:implementation}
 %
 % Load some useful packages.
 %    \begin{macrocode}

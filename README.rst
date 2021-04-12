@@ -98,6 +98,26 @@ Features
     for link type URL/internal reference/citation as specified via the
     ``hyperref`` package.)
 
+  - Simple Python implementation which you can use via your own custom script if
+    you'd like to add link conversions or customize the process in any way.
+
+    To get started::
+
+      import ltxpdflinks
+
+      extractor = ltxpdflinks.PdfGraphicLinksExtractor(fname)
+      extracted = extractor.extractGraphicLinks()
+
+      converter = ltxpdflinks.LatexRefsLinkConverter()
+      converter.convertLinks(extracted)
+
+      lplxexporter = ltxpdflinks.LplxPictureEnvExporter()
+      lplx_content = lplxexporter.export(extracted)
+
+      with open('my_ouput_file_will_be_overwritten.lplx', 'w') as foutput:
+          foutput.write(lplx_content)
+
+
 
 Planned improvements
 ~~~~~~~~~~~~~~~~~~~~
@@ -109,3 +129,28 @@ Planned improvements
     the graphic to another)
 
   - Support for other types of annotations ?
+
+  - Support for generation of ``.pax`` files for use with the `pax LaTeX package
+    <https://www.ctan.org/pkg/pax>`_ instead
+
+
+Existing alternatives
+~~~~~~~~~~~~~~~~~~~~~
+
+  - You can also directly create your diagrams natively in LaTeX using `TiKZ
+    <https://www.overleaf.com/learn/latex/TikZ_package>`_.  I prefer to prepare
+    diagrams with drawing software, but that's a personal preference.
+    
+  - The `pax LaTeX package and associated utility
+    <https://www.ctan.org/pkg/pax>`_ also includes PDF links and annotations
+    using a similar philosophy; it also provides a separate command-line tool to
+    process PDF files before inclusion.
+
+    As far as I could tell, `pax` supports more PDF annotations and preserves
+    link styles.  It doesn't seem to provide link conversion to LaTeX references
+    and citations for internal links.  It also doesn't seem to fully support
+    rotation and clipping via options to ``\includegraphics``.  The command-line
+    utility is written in Java.
+
+    This option has been around for a while, so it might definitely be more
+    stable!

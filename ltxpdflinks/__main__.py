@@ -26,6 +26,12 @@ def main(argv=None):
                         "with '.lplx' extension).  This option cannot be "
                         "used when multiple input files are specified.")
 
+    parser.add_argument("-D", "--doctex", dest='include_comments_catcode',
+                        action='store_true',
+                        default=False,
+                        help="Include special commands for use in "
+                        "package documentation files")
+
     parser.add_argument('-q', '--quiet', dest='logging_level', action='store_const',
                         const=logging.ERROR, default=logging.INFO,
                         help="Suppress warning messages")
@@ -46,20 +52,22 @@ def main(argv=None):
     logging.getLogger().setLevel(args.logging_level)
     logger = logging.getLogger(__name__)
 
-
     if args.output_file is not None:
         if len(args.fnames) > 1:
             raise ValueError("You cannot use -o when you specify multiple files")
 
     for fname in args.fnames:
 
-        logger.info("Inspecting ‘%s’", fname)
+        logger.info("Extracting links from ‘%s’", fname)
 
         extractor = PdfGraphicLinksExtractor(fname)
         extracted = extractor.extractGraphicLinks()
         LatexRefsLinkConverter().convertLinks(extracted)
 
-        exported = LplxPictureEnvExporter().export(extracted)
+        lplxexporter = LplxPictureEnvExporter(
+            include_comments_catcode=args.include_comments_catcode
+        )
+        exported = lplxexporter.export(extracted)
 
         fbasename, fext = os.path.splitext(fname)
 
@@ -75,11 +83,11 @@ def main(argv=None):
 
         if foutput == '-':
             sys.stdout.write(exported)
-            return
+            continue
 
         with open(foutput, 'w') as f:
             f.write(exported)
-            return
+            continue
 
 
 if __name__ == '__main__':
