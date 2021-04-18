@@ -18,17 +18,40 @@ from . import __version__ as version_str
 
 
 def setup_logging(level):
+    # You should use colorlog >= 6.0.0a4
     handler = colorlog.StreamHandler()
-    handler.setFormatter(colorlog.TTYColoredFormatter(
-        stream=sys.stderr,
-        fmt='%(log_color)s%(levelname)-8s %(message)s' #'  [%(name)s]'
-    ))
+    handler.setFormatter( colorlog.LevelFormatter(
+        log_colors={
+            "DEBUG": "white",
+            "INFO": "",
+            "WARNING": "red",
+            "ERROR": "bold_red",
+            "CRITICAL": "bold_red",
+        },
+        fmt={
+            # emojis we can use: 🐞 🐜 🚨 🚦 ⚙️ 🧨 🧹 ❗️❓‼️ ⁉️ ⚠️ ℹ️ ➡️ ✔️ 〰️
+            # 🎶 💭 📣 🔔 ⏳ 🔧 🔩 ✨ 💥 🔥 🐢 👉
+            "DEBUG":    "%(log_color)s〰️    %(message)s", #'  [%(name)s]'
+            "INFO":     "%(log_color)s✨  %(message)s",
+            "WARNING":  "%(log_color)s⚠️   %(message)s", # (%(module)s:%(lineno)d)",
+            "ERROR":    "%(log_color)s🚨  %(message)s", # (%(module)s:%(lineno)d)",
+            "CRITICAL": "%(log_color)s🚨  %(message)s", # (%(module)s:%(lineno)d)",
+        },
+        stream=sys.stderr
+    ) )
 
     root = colorlog.getLogger()
     root.addHandler(handler)
 
     root.setLevel(level)
 
+
+
+def run_main():
+    try:
+        main()
+    except Exception as e:
+        logging.getLogger().critical("Exception: %s", e, exc_info=e)
 
 
 def main(argv=None):
@@ -61,7 +84,7 @@ def main(argv=None):
                         const=logging.ERROR, default=logging.INFO,
                         help="Suppress warning messages")
 
-    parser.add_argument('-v', '--verbose', dest='verbosity', action='store_const', 
+    parser.add_argument('-v', '--verbose', dest='verbosity', action='store_const',
                         const=logging.DEBUG,
                         help='verbose mode')
 
@@ -89,7 +112,7 @@ def main(argv=None):
     for fname in args.fnames:
 
         logger.debug("Extracting links from ‘%s’", fname)
- 
+
         extractor = PdfGraphicLinksExtractor(fname)
         extracted = extractor.extractGraphicLinks()
         LatexRefsLinkConverter().convertLinks(extracted)
@@ -122,4 +145,4 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
-    main()
+    run_main()

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ltxpdflinks"
-version = "0.1.1"
+version = "0.1.2b"
 description = "Extract links in PDF graphics for inclusion in LaTeX documents"
 authors = ["Philippe Faist <philippe.faist@bluewin.ch>"]
 license = "MIT"
@@ -15,13 +15,13 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.7"
 PyPDF2 = "^1.26.0"
-colorlog = "^4.8.0"
+colorlog = "^6.0.0a4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
 
 [tool.poetry.scripts]
-ltxpdflinks = "ltxpdflinks.__main__:main"
+ltxpdflinks = "ltxpdflinks.__main__:run_main"
 
 [build-system]
 requires = ["poetry>=0.12"]
