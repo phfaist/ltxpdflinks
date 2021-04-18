@@ -25,9 +25,9 @@ To get started:
 
      pip3 install ltxpdflinks
 
-2. Download the ``phflplx.sty`` file here::
-
-     https://github.com/phfaist/ltxpdflinks/releases
+2. Download the ``phflplx.sty`` file here:
+   
+   https://github.com/phfaist/ltxpdflinks/releases/latest
 
 To compile your document:
 
@@ -115,19 +115,19 @@ Features
 
 
 
-Planned improvements
-~~~~~~~~~~~~~~~~~~~~
+Planned future improvements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Support the possibility (as an opt-in option) to preserve link styling
-  (border, color, etc.)  instead if using the document links style
+  (border, color, etc.)  instead if using the document links style?
 
 - Support for internal annotations within the PDF graphic (from one part of
-  the graphic to another)
+  the graphic to another)?
 
-- Support for other types of annotations ?
+- Support for other types of annotations?
 
 - Support for generation of ``.pax`` files for use with the `pax LaTeX package
-  <https://www.ctan.org/pkg/pax>`_ instead
+  <https://www.ctan.org/pkg/pax>`_ instead?
 
 
 Existing alternatives
