@@ -135,6 +135,65 @@
 % \end{figure}
 %
 %
+% \section{Using the \phfverb{ltxpdflinks} script}
+%
+% Use the |ltxpdflinks| python script (|pip install ltxpdflinks|) to process
+% your PDF files and generate an accompanying LPLX file.  The LPLX file is then
+% picked up and links are rendered accordingly.
+%
+% The |ltxpdflinks| script will understand the following type of links:
+%
+% \begin{itemize}
+% \item |https://example.com/| --- Regular URLs generate a web link to the given
+%   location, as expected.
+%
+% \item |latexref://ref/<anchor>| and |latexref://cite/<citekey>| --- Special
+%   URLs with the fictitious |latexref://| scheme are treated as internal LaTeX
+%   references and citations (|ref| or |cite| fictitious domain).  The
+%   |<anchor>| and |<citekey>| are arguments that you would provide to |\ref| or
+%   |\cite|, respectively.
+%
+% \item |latexbox://<boxdomain>/<boxname>|, optionally
+%   |latexbox://<boxdomain>/<boxname>?<key1>=<value1>&<key2>=<value2>...| ---
+%   Special URLs with the fictitious |latexbox://| protocol are treated as an
+%   instruction to look up data provided from the LaTeX document and include it
+%   in the figure.  You can use this to include math, custom references, or any
+%   LaTeX content you'd like to add in the figure.
+%
+%   The |<boxdomain>| and |<boxname>| refer to a named ``box'' defined using the
+%   |\phflplxDefineBox| command (below).
+%
+%   You can specify the additional arguments as standard URL query string
+%   arguments:
+%   \begin{itemize}
+%   \item |valign=...| How to align the content vertically.  One of |t| (top),
+%     |c| (center), or |b| (bottom).
+%   \item |halign=...| How to align and typeset the content horizontally.  One
+%     of |l| (left), |c| (center), |r| (right), |p| (just typeset the paragraph
+%     normally w/o additional alignment commands), |ml| (left on one line, using
+%     a |\makebox|), |mc| (center on one line, using a |\makebox|), |mr| (right
+%     on one line, using a |\makebox|), or |ms| (spread on one line, using a
+%     |\makebox|).
+%   \item |stylemacro=macroname| Wrap the contents within a call to the given
+%     styling macro (name without the backslash).  Use for instance
+%     |stylemacro=textbf| to typeset the content in boldface font.
+%   \end{itemize}
+% \end{itemize}
+%
+%
+% \DescribeMacro{\phflplxDefineBox} To provide content from the LaTeX document
+% that the figure can include via a |latexbox://|-type url, use the
+% |\phflplxDefineBox| macro:
+%
+% |\phflplxDefineBox|\marg{boxdomain}\marg{boxname}\marg{content}
+%
+% The \meta{boxdomain} and \meta{boxname} are your user-defined keys.  We
+% suggest having |boxdomain| matching the name of the figure and |boxname| to be
+% a meaningful name describing the content you're saving.  The \meta{content}
+% can be arbitrary content that will be placed where the figure requested the
+% given box.
+%
+%
 % \StopEventually{\PrintChangesAndIndex}
 %
 % \section{Implementation}
@@ -316,6 +375,7 @@
 %
 % Internal command that will be used to render the box from the generated LPLX
 % code:
+%    \begin{macrocode}
 \long\def\lplx@render@box@set@halign@p#1{#1}
 \long\def\lplx@render@box@set@halign@l#1{%
   \raggedright#1}
