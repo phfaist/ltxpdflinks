@@ -102,6 +102,7 @@
 \def\lplxRenderBox[#1]#2[#3]#4#5#6#7{% halign,w,valign,h,stylemacro,boxdomain,boxname
 %%  \message{***LPLX BOX *** |\detokenize{#1}| |\detokenize{#2}| |\detokenize{#3}| |\detokenize{#4}| |\detokenize{#5}| |\detokenize{#6}|}%
   \parbox[b][#4][#3]{#2}{%
+    \vsize=#4\relax
     \csname lplx@render@box@set@halign@#1\endcsname
     {#5{\lplx@render@box@contents{#6}{#7}}}%
   }%
