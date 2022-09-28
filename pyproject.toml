@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ltxpdflinks"
-version = "0.1.2"
+version = "0.2.0"
 description = "Extract links in PDF graphics for inclusion in LaTeX documents"
 authors = ["Philippe Faist <philippe.faist@bluewin.ch>"]
 license = "MIT"

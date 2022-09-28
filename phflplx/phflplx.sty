@@ -76,11 +76,38 @@
     \expandafter\lplx@doputlink
   \fi
 }
+\def\lplxPlaceContent#1#2#3#4#5{% x,y,w,h,content
+  \lplxPutLink{#1}{#2}{#3}{#4}{\@gobble}{#5}%
+}
 {\catcode`\%=12\relax
   \gdef\lplx@percent{%}
 }
 \def\lplxHexChar#1{%
   \lplx@percent#1%
+}
+\long\def\phflplxDefineBox#1#2#3{%
+  \expandafter\gdef\csname lplx@def@box@#1@#2\endcsname{#3}%
+}
+\long\def\lplx@render@box@set@halign@p#1{#1}
+\long\def\lplx@render@box@set@halign@l#1{%
+  \raggedright#1}
+\long\def\lplx@render@box@set@halign@c#1{%
+  \centering#1}
+\long\def\lplx@render@box@set@halign@r#1{%
+  \raggedleft#1}
+\def\lplx@render@box@set@halign@ml{\makebox[\hsize][l]}
+\def\lplx@render@box@set@halign@mc{\makebox[\hsize][c]}
+\def\lplx@render@box@set@halign@mr{\makebox[\hsize][r]}
+\def\lplx@render@box@set@halign@ms{\makebox[\hsize][s]}
+\def\lplxRenderBox[#1]#2[#3]#4#5#6#7{% halign,w,valign,h,stylemacro,boxdomain,boxname
+%%  \message{***LPLX BOX *** |\detokenize{#1}| |\detokenize{#2}| |\detokenize{#3}| |\detokenize{#4}| |\detokenize{#5}| |\detokenize{#6}|}%
+  \parbox[b][#4][#3]{#2}{%
+    \csname lplx@render@box@set@halign@#1\endcsname
+    {#5{\lplx@render@box@contents{#6}{#7}}}%
+  }%
+}
+\def\lplx@render@box@contents#1#2{%
+  \csname lplx@def@box@#1@#2\endcsname
 }
 \def\lplx@IncludeGraphics{%
   \edef\x{\noexpand\hbox to 0pt{%
@@ -110,8 +137,11 @@
   \edef\lplxvCropW{\strip@pt\dimexpr\Gin@urx pt-\Gin@llx pt\relax}%
   \edef\lplxvCropH{\strip@pt\dimexpr\Gin@ury pt-\Gin@lly pt\relax}%
 }
+\def\lplx@phantomrule#1#2{% w, h (dimensions given as the string "Xbp")
+  {\phantom{\rule{#1}{#2}}}%
+}
 \def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
-  \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
+  \put(#1,#2){#5{\lplx@phantomrule{#3bp}{#4bp}}#6}%
 }%
 \newdimen\lplx@tmpx
 \newdimen\lplx@tmpy

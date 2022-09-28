@@ -13,6 +13,7 @@ import colorlog
 
 from ._extractor import ExtractedLink, ExtractedGraphicLinks, PdfGraphicLinksExtractor
 from ._linkconverter import LatexRefsLinkConverter
+from ._placeboxconverter import LatexPlaceBoxConverter
 from ._lplxexporter import LplxPictureEnvExporter
 from . import __version__ as version_str
 
@@ -116,6 +117,7 @@ def main(argv=None):
         extractor = PdfGraphicLinksExtractor(fname)
         extracted = extractor.extractGraphicLinks()
         LatexRefsLinkConverter().convertLinks(extracted)
+        LatexPlaceBoxConverter().convertLinks(extracted)
 
         lplxexporter = LplxPictureEnvExporter(
             include_comments_catcode=args.include_comments_catcode

@@ -9,6 +9,17 @@
 \DeclareGraphicsExtensions{.lplx,.pdf}
 
 
+\phflplxDefineBox{mydomain}{box1}{\textbf{Hello}, \textit{world}!}
+
+\phflplxDefineBox{mydomain}{box2}{This is \itshape typeset in a paragraph, let's
+  include an url \url{https://github.com/} as well as some math:
+  $\int_0^\infty f(x)\,dx$. How's that?}
+
+\def\funnystyle#1{\tiny #1}
+
+
+
+
 \usepackage{hyperref}
 
 \parskip=1.5ex\relax
@@ -21,7 +32,7 @@
 Here is my graphics:
 
 \fboxsep=0pt\relax
-\fbox{\includegraphics{testgraphics2}}
+\fbox{\includegraphics{anothertestgraphics}}
 
 Yay!
 
@@ -29,36 +40,36 @@ Yay!
 
 Smaller: ?
 
-\includegraphics[width=4cm]{testgraphics2}
+\includegraphics[width=4cm]{anothertestgraphics}
 
 \vspace{4cm}
 Trimmed: (but not clipped)
 
 \fboxsep=0pt\relax
-\fbox{\includegraphics[trim=30pt 60pt 70pt 40pt]{testgraphics2}}
+\fbox{\includegraphics[trim=30pt 60pt 70pt 40pt]{anothertestgraphics}}
 
 \vspace{4cm}
 Trimmed \& clipped: ?
 
 \fboxsep=0pt\relax
-\fbox{\includegraphics[trim=30pt 60pt 70pt 40pt,clip]{testgraphics2}}
+\fbox{\includegraphics[trim=30pt 60pt 70pt 40pt,clip]{anothertestgraphics}}
 
 \vspace{4cm}
 Trimmed \& clipped with clipped links: ?
 
 \fboxsep=0pt\relax
-\fbox{\includegraphics[trim=140pt 130pt 160pt 110pt,clip,width=200pt]{testgraphics2}}
+\fbox{\includegraphics[trim=140pt 130pt 160pt 110pt,clip,width=200pt]{anothertestgraphics}}
 
 
 \clearpage
 
 Rotated \& smaller: ?
 
-\includegraphics[angle=10,width=4cm]{testgraphics2}
+\includegraphics[angle=10,width=4cm]{anothertestgraphics}
 
 Smaller \& rotated: ?
 
-\includegraphics[width=4cm,angle=10]{testgraphics2}
+\includegraphics[width=4cm,angle=10]{anothertestgraphics}
 
 
 \section{Test section}

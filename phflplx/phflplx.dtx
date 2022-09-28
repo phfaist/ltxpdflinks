@@ -157,6 +157,9 @@
 }
 %    \end{macrocode}
 %
+%
+% \subsection{Integration into graphics/graphicx package}
+% 
 % Declaring the graphics rule for the LPLX extension.  Note that the LPLX file
 % has the line |%%BoundingBox 0 0 <W> <H>| so that the size of the graphics can
 % be parsed by the default \pkgname{graphics} graphic size inspector, which is
@@ -275,6 +278,15 @@
 }
 %    \end{macrocode}
 %
+% Helper to place other content than a link, using the |\lplxPutLink| mechanism
+% (for placing latex boxes).  The |\@gobble| simply gobbles the default
+% invisible rectangular box that is supposed to be the hyperlink's content.
+%    \begin{macrocode}
+\def\lplxPlaceContent#1#2#3#4#5{% x,y,w,h,content
+  \lplxPutLink{#1}{#2}{#3}{#4}{\@gobble}{#5}%
+}
+%    \end{macrocode}
+% 
 % A simple helper to percent-quote special characters in an URL.
 %
 %    \begin{macrocode}
@@ -286,6 +298,46 @@
 }
 %    \end{macrocode}
 % 
+%
+% \subsection{Providing content to the figure from LaTeX --- ``placing boxes''}
+%
+% Special links in the PDF figure of the form
+% |latexbox://<domain>/<boxname>?<arguments>| allow you to place custom content
+% in the figure from LaTeX.  You can define that content using the
+% |\phflplxDefineBox| command:
+% \begin{macro}{\phflplxDefineBox}
+%    \begin{macrocode}
+\long\def\phflplxDefineBox#1#2#3{%
+  \expandafter\gdef\csname lplx@def@box@#1@#2\endcsname{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% Internal command that will be used to render the box from the generated LPLX
+% code:
+\long\def\lplx@render@box@set@halign@p#1{#1}
+\long\def\lplx@render@box@set@halign@l#1{%
+  \raggedright#1}
+\long\def\lplx@render@box@set@halign@c#1{%
+  \centering#1}
+\long\def\lplx@render@box@set@halign@r#1{%
+  \raggedleft#1}
+\def\lplx@render@box@set@halign@ml{\makebox[\hsize][l]}
+\def\lplx@render@box@set@halign@mc{\makebox[\hsize][c]}
+\def\lplx@render@box@set@halign@mr{\makebox[\hsize][r]}
+\def\lplx@render@box@set@halign@ms{\makebox[\hsize][s]}
+\def\lplxRenderBox[#1]#2[#3]#4#5#6#7{% halign,w,valign,h,stylemacro,boxdomain,boxname
+%%  \message{***LPLX BOX *** |\detokenize{#1}| |\detokenize{#2}| |\detokenize{#3}| |\detokenize{#4}| |\detokenize{#5}| |\detokenize{#6}|}%
+  \parbox[b][#4][#3]{#2}{%
+    \csname lplx@render@box@set@halign@#1\endcsname
+    {#5{\lplx@render@box@contents{#6}{#7}}}%
+  }%
+}
+\def\lplx@render@box@contents#1#2{%
+  \csname lplx@def@box@#1@#2\endcsname
+}
+%    \end{macrocode}
 %
 % \subsection{Internal Implementation Commands}
 %
@@ -350,8 +402,11 @@
 %
 % Tools to place links \& clip them if necessary.
 %    \begin{macrocode}
+\def\lplx@phantomrule#1#2{% w, h (dimensions given as the string "Xbp")
+  {\phantom{\rule{#1}{#2}}}%
+}
 \def\lplx@doputlink#1#2#3#4#5#6{% x,y,w,h,hyperstart,hyperend
-  \put(#1,#2){#5{\phantom{\rule{#3bp}{#4bp}}}#6}%
+  \put(#1,#2){#5{\lplx@phantomrule{#3bp}{#4bp}}#6}%
 }%
 \newdimen\lplx@tmpx
 \newdimen\lplx@tmpy
